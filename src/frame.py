@@ -40,7 +40,7 @@ class Frame:
             raise Exception("values len must be the product of row and column")
         if not all(type(v) is int for v in values):
             raise Exception("all values items must be of type int")
-        if all( 0 < v < self.row*self.column for v in values):
+        if not all( 0 < v < self.row*self.column for v in values):
             raise Exception("all values items must be of value <0, row*column)")
         if len(values) is not len(set(values)):
             raise Exception("values items must not repeat")
