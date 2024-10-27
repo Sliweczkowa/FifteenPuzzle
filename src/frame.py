@@ -5,7 +5,7 @@ class Frame:
 
     def __init__(self, r: int, c: int, vals: List[int]):
         self.row_count = self.set_row_count(r)
-        self.column_count = self.set_column_count(r)
+        self.column_count = self.set_column_count(c)
         self.game_board = self.validate_game_board(vals)
         self.winning_board = [i for i in range(r * c)]
 
