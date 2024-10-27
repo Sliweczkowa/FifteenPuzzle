@@ -12,13 +12,13 @@ class Frame:
     def set_column_count(self, row):
         if type(row) is not int:
             raise Exception("row must be of type int")
-        self.row_count = row
+        return row
 
     def set_row_count(self, col):
         if type(col) is not int:
             raise Exception("column must be of type int")
         # TODO: add exception for minimal value
-        self.column_count = col
+        return col
 
     def validate_game_board(self, new_board):
         if len(new_board) is not self.row_count * self.column_count:
@@ -29,7 +29,7 @@ class Frame:
             raise Exception("all values items must be of value <-1, row*column)")
         if len(new_board) is not len(set(new_board)):
             raise Exception("values items must not repeat")
-        self.game_board = new_board
+        return new_board
 
     def validate_win(self) -> bool:
         return self.winning_board == self.game_board
