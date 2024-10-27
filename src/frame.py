@@ -20,7 +20,7 @@ class Frame:
         # TODO: add exception for minimal value
         return col
 
-    def validate_game_board(self, new_board):
+    def validate_game_board(self, new_board) -> List[int]:
         if len(new_board) is not self.row_count * self.column_count:
             raise Exception("values len must be the product of row and column")
         if not all(type(v) is int for v in new_board):
@@ -33,3 +33,28 @@ class Frame:
 
     def validate_win(self) -> bool:
         return self.winning_board == self.game_board
+
+    def get_blank_pos(self) -> tuple[int]:
+        blank_index = self.game_board.index(0)
+        return divmod(blank_index, self.column_count)
+
+    def get_legal_moves(self, blank_row, blank_col) -> set[tuple[int,int]]:
+
+        legal_moves = set()
+
+        if blank_row > 0:
+            legal_moves.add((-1, 0))
+        if blank_row < self.row_count - 1:
+            legal_moves.add((1, 0))
+        if blank_col > 0:
+            legal_moves.add((0, -1))
+        if blank_col < self.column_count - 1:
+            legal_moves.add((0, 1))
+
+        return legal_moves
+
+    def move(self, legal_moves: set[int], direction, blank_pos: int):
+        if direction in legal_moves:
+            self.game_board[blank_pos], self.game_board[blank_pos + direction[0] * self.row_count + direction[1]] = \
+                self.game_board[
+                    blank_pos + direction[0] * self.row_count + direction[1]], self.game_board[blank_pos]
