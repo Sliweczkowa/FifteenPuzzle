@@ -26,7 +26,7 @@ class Frame:
         if not all(type(v) is int for v in new_board):
             raise Exception("all values items must be of type int")
         if not all(-1 < v < self.row_count * self.column_count for v in new_board):
-            raise Exception("all values items must be of value <-1, row*column)")
+            raise Exception("all values items must be of value (-1, row*column)")
         if len(new_board) is not len(set(new_board)):
             raise Exception("values items must not repeat")
         return new_board
