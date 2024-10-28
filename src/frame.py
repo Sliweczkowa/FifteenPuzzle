@@ -9,14 +9,14 @@ class Frame:
         self.game_board = self.validate_game_board(vals)
         self.winning_board = [i for i in range(r * c)]
 
-    def set_column_count(self, row):
+    def set_column_count(self, row) -> int:
         if type(row) is not int:
             raise Exception("row must be of type int")
         if row < 2:
             raise Exception("row must be greater or equal 2")
         return row
 
-    def set_row_count(self, col):
+    def set_row_count(self, col) -> int:
         if type(col) is not int:
             raise Exception("column must be of type int")
         if col < 2:
@@ -37,7 +37,7 @@ class Frame:
     def validate_win(self) -> bool:
         return self.winning_board == self.game_board
 
-    def get_blank_pos(self) -> tuple[int]:
+    def get_blank_pos(self) -> tuple[int, int]:
         blank_index = self.game_board.index(0)
         return divmod(blank_index, self.column_count)
 
@@ -56,7 +56,7 @@ class Frame:
 
         return legal_moves
 
-    def move(self, legal_moves: set[int], direction, blank_pos: int):
+    def move(self, legal_moves: set[int], direction, blank_pos: int) -> None:
         if direction in legal_moves:
             self.game_board[blank_pos], self.game_board[blank_pos + direction[0] * self.row_count + direction[1]] = \
                 self.game_board[
