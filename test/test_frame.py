@@ -10,8 +10,8 @@ class TestFrame(unittest.TestCase):
         self.assertRaises(Exception, Frame, 4.15, 4, [])
         self.assertRaises(Exception, Frame, 4, 5.99, [])
         # Parameters row and column must be grater than 0
-        # self.assertRaises(Exception, Frame, 4, 0, [])  # TODO: frame.py
-        # self.assertRaises(Exception, Frame, 0, 4, [])  # TODO: frame.py
+        self.assertRaises(Exception, Frame, 4, 2, [])
+        self.assertRaises(Exception, Frame, 0, 4, [])
 
     def test_frame_values(self):
         # Parameter values' length must be the product of row and column

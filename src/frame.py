@@ -12,12 +12,15 @@ class Frame:
     def set_column_count(self, row):
         if type(row) is not int:
             raise Exception("row must be of type int")
+        if row < 2:
+            raise Exception("row must be greater or equal 2")
         return row
 
     def set_row_count(self, col):
         if type(col) is not int:
             raise Exception("column must be of type int")
-        # TODO: add exception for minimal value
+        if col < 2:
+            raise Exception("column must be greater or equal 2")
         return col
 
     def validate_game_board(self, new_board) -> List[int]:
