@@ -46,13 +46,13 @@ class Frame:
         legal_moves = set()
 
         if blank_row > 0:
-            legal_moves.add((-1, 0))
+            legal_moves.add((-1, 0))  # Piece having freedom moved down - D
         if blank_row < self.row_count - 1:
-            legal_moves.add((1, 0))
+            legal_moves.add((1, 0))  # Piece having freedom moved up - U
         if blank_col > 0:
-            legal_moves.add((0, -1))
+            legal_moves.add((0, -1))  # Piece having freedom moved right - R
         if blank_col < self.column_count - 1:
-            legal_moves.add((0, 1))
+            legal_moves.add((0, 1))  # Piece having freedom moved left - L
 
         return legal_moves
 
@@ -61,3 +61,14 @@ class Frame:
             self.game_board[blank_pos], self.game_board[blank_pos + direction[0] * self.row_count + direction[1]] = \
                 self.game_board[
                     blank_pos + direction[0] * self.row_count + direction[1]], self.game_board[blank_pos]
+
+def translate_legal_moves_to_chr(tuple_moves: set[tuple[int, int]]) -> set[chr]:
+
+    dictionary = {
+        (-1, 0): 'D',
+        (1, 0): 'U',
+        (0, -1): 'R',
+        (0, 1): 'L'
+    }
+
+    return set(dictionary.get(m) for m in tuple_moves)
