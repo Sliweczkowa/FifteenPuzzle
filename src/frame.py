@@ -8,7 +8,7 @@ class Frame:
         self.row_count = self.set_row_count(r)
         self.column_count = self.set_column_count(c)
         self.game_board = self.validate_game_board(vals)
-        self.winning_board = [i for i in range(r * c)]
+        self.winning_board = [i for i in range(1, r * c)] + [0]
 
     def set_column_count(self, row) -> int:
         if type(row) is not int:
