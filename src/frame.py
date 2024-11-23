@@ -1,3 +1,4 @@
+import copy
 from typing import List
 
 
@@ -71,7 +72,6 @@ class Frame:
 
         return legal_moves
 
-
     def move(self, legal_moves: set[int], direction, blank_pos: int) -> None:
         if direction in legal_moves:
             self.game_board[blank_pos], self.game_board[blank_pos + direction[0] * self.row_count + direction[1]] = \
@@ -80,7 +80,7 @@ class Frame:
 
 
 def moved_frame(frame: Frame, blank_pos: int, not_blank_pos: int) -> Frame:
-    moved_board = frame.game_board
+    moved_board = copy.deepcopy(frame.game_board)
     moved_board[blank_pos] = frame.game_board[not_blank_pos]
     moved_board[not_blank_pos] = 0
     return Frame(frame.row_count, frame.column_count, moved_board)
