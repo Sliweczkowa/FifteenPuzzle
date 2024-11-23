@@ -63,6 +63,13 @@ class Frame:
                     blank_pos + direction[0] * self.row_count + direction[1]], self.game_board[blank_pos]
 
 
+def moved_frame(frame: Frame, blank_pos: int, not_blank_pos: int) -> Frame:
+    moved_board = frame.game_board
+    moved_board[blank_pos] = frame.game_board[not_blank_pos]
+    moved_board[not_blank_pos] = 0
+    return Frame(frame.row_count, frame.column_count, moved_board)
+
+
 def translate_legal_moves_to_chr(tuple_moves: set[tuple[int, int]]) -> set[chr]:
 
     dictionary = {
