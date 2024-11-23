@@ -56,6 +56,22 @@ class Frame:
 
         return legal_moves
 
+    def get_legal_positions_tuple(self, blank_row, blank_col) -> set[tuple[int, int]]:
+
+        legal_moves = set()
+
+        if blank_row > 0:
+            legal_moves.add((blank_row - 1, blank_col))  # Piece having freedom moved down - D
+        if blank_row < self.row_count - 1:
+            legal_moves.add((blank_row + 1, blank_col))  # Piece having freedom moved up - U
+        if blank_col > 0:
+            legal_moves.add((blank_row, blank_col - 1))  # Piece having freedom moved right - R
+        if blank_col < self.column_count - 1:
+            legal_moves.add((blank_row, blank_col + 1))  # Piece having freedom moved left - L
+
+        return legal_moves
+
+
     def move(self, legal_moves: set[int], direction, blank_pos: int) -> None:
         if direction in legal_moves:
             self.game_board[blank_pos], self.game_board[blank_pos + direction[0] * self.row_count + direction[1]] = \
