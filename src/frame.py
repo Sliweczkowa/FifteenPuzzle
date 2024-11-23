@@ -62,6 +62,7 @@ class Frame:
                 self.game_board[
                     blank_pos + direction[0] * self.row_count + direction[1]], self.game_board[blank_pos]
 
+
 def translate_legal_moves_to_chr(tuple_moves: set[tuple[int, int]]) -> set[chr]:
 
     dictionary = {
@@ -72,3 +73,7 @@ def translate_legal_moves_to_chr(tuple_moves: set[tuple[int, int]]) -> set[chr]:
     }
 
     return set(dictionary.get(m) for m in tuple_moves)
+
+
+def translate_2d_to_int(tuple_coords: tuple[int, int], columns_no: int) -> int:
+    return tuple_coords[0] * columns_no + tuple_coords[1]
