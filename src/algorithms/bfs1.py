@@ -36,9 +36,16 @@ def bfs1(board: Frame, order: set[chr]) -> list[chr] | int:
             legal_positions = frame.get_legal_positions_tuple(*frame.get_blank_pos())  # unordered set of tuples
             # not_visited_positions = [x for x in legal_positions if x != visited[-2]]
             frame_blank_position_int = translate_2d_to_int(frame.get_blank_pos(), frame.column_count)
-            legal_frames.extend(
-                [(moved_frame(frame, frame_blank_position_int, translate_2d_to_int(x, frame.column_count)),
-                  visited + [x]) for x in legal_positions])
+            legal_frames_to_check = [
+                (moved_frame(frame, frame_blank_position_int, translate_2d_to_int(x, frame.column_count)),
+                 visited + [x]) for x in legal_positions]
+            for to_check, v1 in legal_frames_to_check:
+                in_array = False
+                for not_repeated, v2 in legal_frames:
+                    if to_check.__eq__(not_repeated):
+                        in_array = True
+                if not in_array:
+                    legal_frames.append((to_check, v1))
 
     return -1
 
