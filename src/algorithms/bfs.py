@@ -39,15 +39,3 @@ def bfs(board: Frame, order: list[chr]) -> list[chr] | int:
                     legal_frames.append((to_check, v1))
 
     return -1
-
-
-# f = bfs(Frame(3, 3, [1, 2, 3, 5, 6, 0, 7, 8, 4]), 1)
-# b = bfs(Frame(3, 3, [1, 0, 2, 3, 4, 5, 6, 7, 8]), 1)
-e = bfs(Frame(3, 3, [1, 2, 3, 4, 5, 6, 7, 0, 8]), 1)
-# a = bfs(Frame(3, 3, [5, 4, 8, 6, 0, 1, 7, 2, 3]), 1)
-# c = bfs(Frame(4, 4, [13, 2, 10, 3, 1, 12, 8, 4, 5, 0, 9, 6, 15, 14, 11, 7]), 1)
-# d = bfs(Frame(3, 3, [1, 8, 2, 0, 4, 3, 7, 6, 5]), 1)
-
-# print(d)
-
-i = 0
