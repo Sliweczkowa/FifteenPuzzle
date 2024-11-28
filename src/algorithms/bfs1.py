@@ -1,14 +1,8 @@
-from queue import Queue
-
 from src.frame import *
 
 
 # TODO: sort moves by 'order' parameter and output to ordered array
 def bfs1(board: Frame, order: set[chr]) -> list[chr] | int:
-    queue = Queue()  # Queue of unchecked moves
-    moves = []  # Output list of moves
-    chrs = []
-    coords = []
 
     # Get blank info
     (blank_row, blank_col) = board.get_blank_pos()
@@ -24,8 +18,6 @@ def bfs1(board: Frame, order: set[chr]) -> list[chr] | int:
                     for x in legal_positions]
 
     for frame, visited in legal_frames:
-        if len(visited) > 50:
-            return -2
 
         # Check for win
         if frame.validate_win() is True:
@@ -34,7 +26,6 @@ def bfs1(board: Frame, order: set[chr]) -> list[chr] | int:
         # If not won add more
         else:
             legal_positions = frame.get_legal_positions_tuple(*frame.get_blank_pos())  # unordered set of tuples
-            # not_visited_positions = [x for x in legal_positions if x != visited[-2]]
             frame_blank_position_int = translate_2d_to_int(frame.get_blank_pos(), frame.column_count)
             legal_frames_to_check = [
                 (moved_frame(frame, frame_blank_position_int, translate_2d_to_int(x, frame.column_count)),
