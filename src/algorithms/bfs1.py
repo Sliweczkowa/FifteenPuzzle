@@ -2,7 +2,7 @@ from src.frame import *
 
 
 # TODO: sort moves by 'order' parameter and output to ordered array
-def bfs1(board: Frame, order: set[chr]) -> list[chr] | int:
+def bfs1(board: Frame, order: list[chr]) -> list[chr] | int:
 
     # Get blank info
     (blank_row, blank_col) = board.get_blank_pos()
