@@ -20,7 +20,7 @@ def bfs1(board: Frame, order: set[chr]) -> list[chr] | int:
 
     # Get possible frames
     legal_positions = board.get_legal_positions_tuple(blank_row, blank_col)  # unordered set of tuples
-    legal_frames = [(moved_frame(board, blank_position_int, translate_2d_to_int(x, board.column_count)), visited_positions)
+    legal_frames = [(moved_frame(board, blank_position_int, translate_2d_to_int(x, board.column_count)), visited_positions + [x])
                     for x in legal_positions]
 
     for frame, visited in legal_frames:
