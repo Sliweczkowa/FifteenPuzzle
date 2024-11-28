@@ -10,6 +10,11 @@ class Frame:
         self.game_board = self.validate_game_board(vals)
         self.winning_board = [i for i in range(1, r * c)] + [0]
 
+    def __eq__(self, other):
+        return (self.row_count == other.row_count and
+                self.column_count == other.column_count and
+                self.game_board == other.game_board)
+
     def set_column_count(self, row) -> int:
         if type(row) is not int:
             raise Exception("row must be of type int")
