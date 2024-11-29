@@ -2,6 +2,16 @@ import copy
 from typing import List
 
 
+dictionary = {
+        (-1, 0): 'D',
+        (1, 0): 'U',
+        (0, -1): 'R',
+        (0, 1): 'L'
+    }
+
+
+
+
 class Frame:
 
     def __init__(self, r: int, c: int, vals: List[int]):
@@ -47,6 +57,9 @@ class Frame:
         blank_index = self.game_board.index(0)
         return divmod(blank_index, self.column_count)
 
+    def get_blank_index(self) -> int:
+        return self.game_board.index(0)
+
     def get_legal_moves(self, blank_row, blank_col) -> set[tuple[int,int]]:
 
         legal_moves = set()
@@ -77,11 +90,43 @@ class Frame:
 
         return legal_moves
 
+    def get_legal_positions_dict(self, blank_row, blank_col) -> dict[str, tuple[int, int]]:
+
+        legal_moves = {}
+
+        if blank_row > 0:
+            legal_moves['U'] = (blank_row - 1, blank_col) # Piece having freedom moved down - D
+        if blank_row < self.row_count - 1:
+            legal_moves['D'] = (blank_row + 1, blank_col)  # Piece having freedom moved up - U
+        if blank_col > 0:
+            legal_moves['L'] = (blank_row, blank_col - 1)  # Piece having freedom moved right - R
+        if blank_col < self.column_count - 1:
+            legal_moves['R'] = (blank_row, blank_col + 1)  # Piece having freedom moved left - L
+
+        return legal_moves
+
     def move(self, legal_moves: set[int], direction, blank_pos: int) -> None:
         if direction in legal_moves:
             self.game_board[blank_pos], self.game_board[blank_pos + direction[0] * self.row_count + direction[1]] = \
                 self.game_board[
                     blank_pos + direction[0] * self.row_count + direction[1]], self.game_board[blank_pos]
+
+    def get_moved_boards(self) -> dict[str, List[int]]:
+        blank_pos = self.get_blank_pos()
+        legal_moves = self.get_legal_positions_dict(blank_pos[0], blank_pos[1])
+        moved_boards = {}
+
+        for key, move in legal_moves.items():
+            new_board = self.game_board[:]
+            blank_index = self.get_blank_index()
+            move_index = translate_2d_to_int(move, self.column_count)
+            new_board[blank_index], new_board[move_index] = new_board[move_index], new_board[blank_index]
+            moved_boards[key]= new_board
+
+        return moved_boards
+
+    # y x
+
 
 
 def moved_frame(frame: Frame, blank_pos: int, not_blank_pos: int) -> Frame:
@@ -93,12 +138,6 @@ def moved_frame(frame: Frame, blank_pos: int, not_blank_pos: int) -> Frame:
 
 def translate_legal_moves_to_chr(tuple_moves: set[tuple[int, int]]) -> set[chr]:
 
-    dictionary = {
-        (-1, 0): 'D',
-        (1, 0): 'U',
-        (0, -1): 'R',
-        (0, 1): 'L'
-    }
 
     return set(dictionary.get(m) for m in tuple_moves)
 
