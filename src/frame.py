@@ -14,11 +14,12 @@ dictionary = {
 
 class Frame:
 
-    def __init__(self, r: int, c: int, vals: List[int]):
+    def __init__(self, r: int, c: int, vals: List[int],moved=''):
         self.row_count = self.set_row_count(r)
         self.column_count = self.set_column_count(c)
         self.game_board = self.validate_game_board(vals)
         self.winning_board = [i for i in range(1, r * c)] + [0]
+        self.moved = moved
 
     def __eq__(self, other):
         return (self.row_count == other.row_count and
