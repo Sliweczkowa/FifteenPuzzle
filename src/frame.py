@@ -12,6 +12,22 @@ dictionary = {
 
 
 
+
+def translate_legal_moves_to_chr(tuple_moves: set[tuple[int, int]]) -> set[chr]:
+
+
+    return set(dictionary.get(m) for m in tuple_moves)
+
+
+def translate_2d_to_int(tuple_coords: tuple[int, int], columns_no: int) -> int:
+    return tuple_coords[0] * columns_no + tuple_coords[1]
+
+
+
+
+
+
+
 class Frame:
 
     def __init__(self, r: int, c: int, vals: List[int],moved=''):
@@ -127,21 +143,52 @@ class Frame:
         return moved_boards
 
     # y x
-
-
-
 def moved_frame(frame: Frame, blank_pos: int, not_blank_pos: int) -> Frame:
     moved_board = copy.deepcopy(frame.game_board)
     moved_board[blank_pos] = frame.game_board[not_blank_pos]
     moved_board[not_blank_pos] = 0
     return Frame(frame.row_count, frame.column_count, moved_board)
 
+def create_frame_from_file(file_path: str) -> Frame:
+    with open(file_path, 'r') as file:
+        first_line = file.readline().strip()
+        R, C = map(int, first_line.split())
 
-def translate_legal_moves_to_chr(tuple_moves: set[tuple[int, int]]) -> set[chr]:
+        data = [[int(v) for v in i.strip().split(' ')] for i in file.readlines()]
+        flattened = [item for sublist in data for item in sublist]
+
+    return Frame(R, C, flattened)
 
 
-    return set(dictionary.get(m) for m in tuple_moves)
 
+def get_board_for_solved(frame, inp):
+    boards = [frame.game_board]
+    for move in inp:
+        moved_board = frame.get_moved_boards()[move]
+        frame = Frame(frame.row_count, frame.column_count, moved_board, frame.moved)
+        boards.append(frame.game_board)
 
-def translate_2d_to_int(tuple_coords: tuple[int, int], columns_no: int) -> int:
-    return tuple_coords[0] * columns_no + tuple_coords[1]
+    return boards
+
+def save_boards_to_file(frame, inp, filename):
+    boards = get_board_for_solved(frame, inp)
+
+    with open(filename, 'w') as f:
+        f.write(f"{frame.row_count} {frame.column_count}\n")
+        for board in boards:
+            f.write(' '.join(map(str, board)) + '\n')
+
+# t = get_board_for_solved(Frame(4, 4,
+#               [1,7,2,3
+#                    ,5,0,11,4,
+#                     9,6,12,8
+#                    ,13,10,14,15]
+#               ), 'URRDDLULDDRR')
+#
+
+save_boards_to_file(Frame(4, 4,
+              [1,7,2,3
+                   ,5,0,11,4,
+                    9,6,12,8
+                   ,13,10,14,15]
+              ), 'URRDDLULDDRR', 'test.txt')

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame Viewer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="frame-container"></div>
+    <div id="controls">
+        <button id="first-button">&lt;&lt;</button>
+        <button id="prev-button">&lt;</button>
+        <input type="text" id="frame-index" value="0">
+        <label id="lenght">12</label>
+        <button id="next-button">&gt;</button>
+        <button id="last-button">&gt;&gt;</button>
+    </div>
+    <input type="file" id="file-input">
+    <script>
+        let frames = [];
+        let currentFrameIndex = 0;
+
+        const frameContainer = document.getElementById('frame-container');
+        const frameIndexInput = document.getElementById('frame-index');
+        const firstButton = document.getElementById('first-button');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        const lastButton = document.getElementById('last-button');
+        const fileInput = document.getElementById('file-input');
+        const lenghtLabel = document.getElementById('lenght');
+
+        function setup(){
+            lenghtLabel.textContent = frames.length;
+        }
+
+
+        function drawFrame(frame) {
+            frameContainer.innerHTML = '';
+            frame.forEach(value => {
+                const cell = document.createElement('div');
+                cell.className = 'frame-cell';
+                cell.textContent = value !== 0 ? value : '';
+                frameContainer.appendChild(cell);
+            });
+        }
+
+        function updateFrame() {
+            drawFrame(frames[currentFrameIndex]);
+            frameIndexInput.value = currentFrameIndex;
+        }
+
+        firstButton.addEventListener('click', () => {
+            currentFrameIndex = 0;
+            updateFrame();
+        });
+
+        prevButton.addEventListener('click', () => {
+            if (currentFrameIndex > 0) {
+                currentFrameIndex--;
+                updateFrame();
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentFrameIndex < frames.length - 1) {
+                currentFrameIndex++;
+                updateFrame();
+            }
+        });
+
+        lastButton.addEventListener('click', () => {
+            currentFrameIndex = frames.length - 1;
+            updateFrame();
+        });
+
+        frameIndexInput.addEventListener('change', () => {
+            const index = parseInt(frameIndexInput.value, 10);
+            if (!isNaN(index) && index >= 0 && index < frames.length) {
+                currentFrameIndex = index;
+                updateFrame();
+            } else {
+                frameIndexInput.value = currentFrameIndex;
+            }
+        });
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const lines = e.target.result.split('\n').filter(line => line.trim() !== '');
+                    const [rows, cols] = lines[0].split(' ').map(Number);
+                    frames = lines.slice(1).map(line => line.split(' ').map(Number));
+                    updateFrame();
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        updateFrame();
+        setup();
+    </script>
+</body>
+</html>
