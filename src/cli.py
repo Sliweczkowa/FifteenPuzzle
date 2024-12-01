@@ -20,13 +20,21 @@ args = parser.parse_args()
 
 # Row and column input
 r, c = [int(x) for x in input().split(' ')]
+
 # Board values input
 str_list = []
 for i in range(r):
     str_list += [int(x) for x in input().split(' ')]
+
 # Frame creation
 frame = Frame(r, c, str_list)
-result = []
+
+# Check if board is solvable
+if frame.is_solvable():
+    result = []
+else:
+    print("-1")
+    exit()
 
 if args.bfs:
     result = bfs2(frame, list(args.bfs))
