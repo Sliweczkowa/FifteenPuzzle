@@ -54,6 +54,29 @@ class Frame:
             raise Exception("values items must not repeat")
         return new_board
 
+    def is_solvable(self) -> bool:
+        is_n_odd = self.row_count % 2
+        is_inversions_odd = self.count_inversions() % 2
+        is_blank_row_from_bottom_even = (self.row_count - self.get_blank_pos()[0]) % 2
+        if is_n_odd and not is_inversions_odd:
+            return True
+        elif not is_n_odd:
+            if is_inversions_odd and is_blank_row_from_bottom_even:
+                return True
+            elif not is_inversions_odd and not is_blank_row_from_bottom_even:
+                return True
+        else:
+            return False
+
+    def count_inversions(self) -> int:
+        count = 0
+        for ii in range(1, self.row_count * self.column_count):
+            index_ii = self.game_board.index(ii)
+            for num in self.game_board[:index_ii]:
+                if num > ii:
+                    count += 1
+        return count
+
     def validate_win(self) -> bool:
         return self.winning_board == self.game_board
 
