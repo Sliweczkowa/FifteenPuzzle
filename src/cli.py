@@ -1,5 +1,8 @@
 import argparse
 
+from src.algorithms.bfs import bfs
+from src.frame import Frame
+
 parser = argparse.ArgumentParser(conflict_handler='resolve')
 
 parser.add_argument("-b", "--bfs", help="breadth-first search", type=str, metavar="order")
@@ -13,8 +16,16 @@ parser.add_argument("-f", "--save", help="save output to text file", type=str, m
 args = parser.parse_args()
 
 if args.bfs:
-    # TODO: Implement breadth-first search
-    print("Info: breadth-first search not implemented yet")
+    # Row and column input
+    r, c = [int(x) for x in input().split(' ')]
+    # Board values input
+    str_list = []
+    for i in range(r):
+        str_list += [int(x) for x in input().split(' ')]
+    # Breadth-first search call
+    frame = Frame(r, c, str_list)
+    bfs = bfs(frame, args.bfs)  # TODO: Switch for bfs2 (latin chrs) when ready
+    print(len(bfs) - 1, '\n', bfs)
 
 if args.dfs:
     # TODO: Implement depth-first search
