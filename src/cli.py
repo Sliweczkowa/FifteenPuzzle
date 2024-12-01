@@ -1,7 +1,9 @@
 import argparse
 
 from src.algorithms.a_star import a_star
-from src.algorithms.bfs import bfs
+from src.algorithms.bfs2 import bfs2
+from src.algorithms.dfs2 import dfs
+from src.algorithms.idfs import idfs
 from src.frame import Frame, save_boards_to_file
 
 parser = argparse.ArgumentParser(conflict_handler='resolve')
@@ -27,16 +29,16 @@ frame = Frame(r, c, str_list)
 result = []
 
 if args.bfs:
-    result = bfs(frame, list(args.bfs))  # TODO: Switch for bfs2 (latin chrs) when ready
-    print(len(result) - 1, '\n', result)
+    result = bfs2(frame, list(args.bfs))
+    print(len(result), '\n', result)
 
 if args.dfs:
-    # TODO: Implement depth-first search
-    print("Info: depth-first search not implemented yet")
+    result = dfs(frame, list(args.dfs))
+    print(len(result), '\n', result)
 
 if args.idfs:
-    # TODO: Implement iterative deepening DFS
-    print("Info: iterative deepening DFS not implemented yet")
+    result = idfs(frame, list(args.idfs), 0, 1)
+    print(len(result), '\n', result)
 
 if args.bf:
     result = a_star(frame, int(args.bf), 1)  # Only heuristic part of a*
