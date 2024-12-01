@@ -1,14 +1,9 @@
 from src.frame import Frame
 
-
-
-
 def idfs(frame: Frame, order_of_moves, depth, depth_limit):
-
     already_moved = set()
 
     def _idfs(frame: Frame, order_of_moves, depth, depth_limit):
-
         if depth > depth_limit:
             return False
 
@@ -25,13 +20,15 @@ def idfs(frame: Frame, order_of_moves, depth, depth_limit):
             if tuple(new_frame) in already_moved:
                 continue
             additive = frame.moved + direction
-            return _idfs(Frame(frame.row_count, frame.column_count, new_frame, additive), order_of_moves, depth + 1,
-                 depth_limit)
+            result = _idfs(Frame(frame.row_count, frame.column_count, new_frame, additive), order_of_moves, depth + 1, depth_limit)
+            if result:
+                return result
+
+        return False
 
     while True:
-        r = _idfs(frame, order_of_moves,depth,depth_limit)
+        result = _idfs(frame, order_of_moves, depth, depth_limit)
+        if result:
+            return result
         depth_limit += 1
         already_moved.clear()
-
-        if r:
-            return r

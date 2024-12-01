@@ -68,16 +68,3 @@ def a_star(frame: Frame, id_of_heuristic: int, weight: float) -> list[chr]:
                 queue.append((frame, total_cost, old_frame_moves + [move_chr]))
 
     return queue.popleft()[2]
-
-
-# fr0 = Frame(3, 3, [1, 2, 3, 4, 5, 6, 7, 0, 8])
-# fr1 = Frame(3, 3, [1, 3, 6, 5, 2, 0, 4, 7, 8])
-fr2 = Frame(3, 3, [1, 8, 2, 0, 4, 3, 7, 6, 5])
-# fr3 = Frame(4, 4, [11, 4, 10, 7, 0, 3, 9, 2, 15, 1, 14, 5, 12, 13, 6, 8])
-# result_bfs = bfs2(fr1, ['R', 'L', 'D', 'U'])
-# print(result_bfs)
-result = a_star(frame=fr2, id_of_heuristic=0, weight=0.5)
-print(len(result))
-print(result)
-
-i = 0

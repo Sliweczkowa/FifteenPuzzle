@@ -30,13 +30,14 @@ def translate_2d_to_int(tuple_coords: tuple[int, int], columns_no: int) -> int:
 
 class Frame:
 
-    def __init__(self, r: int, c: int, vals: List[int],moved='',cost=0):
+    def __init__(self, r: int, c: int, vals: List[int],moved='',cost=0, board_cost=0):
         self.row_count = self.set_row_count(r)
         self.column_count = self.set_column_count(c)
         self.game_board = self.validate_game_board(vals)
         self.winning_board = [i for i in range(1, r * c)] + [0]
         self.moved = moved
         self.cost = cost
+        self.board_cost = 0
 
     def __eq__(self, other):
         return (self.row_count == other.row_count and
