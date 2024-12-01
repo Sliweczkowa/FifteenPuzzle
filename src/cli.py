@@ -15,15 +15,16 @@ parser.add_argument("-f", "--save", help="save output to text file", type=str, m
 
 args = parser.parse_args()
 
+# Row and column input
+r, c = [int(x) for x in input().split(' ')]
+# Board values input
+str_list = []
+for i in range(r):
+    str_list += [int(x) for x in input().split(' ')]
+# Frame creation
+frame = Frame(r, c, str_list)
+
 if args.bfs:
-    # Row and column input
-    r, c = [int(x) for x in input().split(' ')]
-    # Board values input
-    str_list = []
-    for i in range(r):
-        str_list += [int(x) for x in input().split(' ')]
-    # Breadth-first search call
-    frame = Frame(r, c, str_list)
     bfs = bfs(frame, args.bfs)  # TODO: Switch for bfs2 (latin chrs) when ready
     print(len(bfs) - 1, '\n', bfs)
 
