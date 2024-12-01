@@ -1,4 +1,5 @@
 from collections import deque
+from random import shuffle
 
 from src.frame import Frame
 
@@ -10,6 +11,11 @@ def bfs2(frame: Frame, order_of_moves: list[chr]) -> list[chr]:
     row_no = frame.row_count
     column_no = frame.column_count
 
+    if order_of_moves[0] == 'R':
+        random_order = True
+    else:
+        random_order = False
+
     while True:
         current_frame = queue.popleft()
         moved_frames = current_frame.get_moved_boards()
@@ -17,6 +23,8 @@ def bfs2(frame: Frame, order_of_moves: list[chr]) -> list[chr]:
         if current_frame.validate_win():
             return list(current_frame.moved)
 
+        if random_order:
+            shuffle(order_of_moves)
         for direction in order_of_moves:
             if direction not in moved_frames:
                 continue
