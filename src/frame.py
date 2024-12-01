@@ -39,6 +39,9 @@ class Frame:
         self.cost = cost
         self.board_cost = 0
 
+    def __lt__(self, other):
+        return self.cost < other.cost
+
     def __eq__(self, other):
         return (self.row_count == other.row_count and
                 self.column_count == other.column_count and
