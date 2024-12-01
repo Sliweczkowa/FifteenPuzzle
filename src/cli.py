@@ -4,6 +4,7 @@ from src.algorithms.a_star import a_star
 from src.algorithms.bfs2 import bfs2
 from src.algorithms.dfs2 import dfs
 from src.algorithms.idfs import idfs
+from src.algorithms.sma import sma_star
 from src.frame import Frame, save_boards_to_file
 
 parser = argparse.ArgumentParser(conflict_handler='resolve')
@@ -52,8 +53,7 @@ if args.astar:
     result = a_star(frame, int(args.astar), 0.5)
 
 if args.sma:
-    # TODO: Implement SMA* strategy
-    print("Info: SMA* strategy not implemented yet")
+    result = sma_star(frame, int(args.sma), 0.5, 100)
 
 if len(result) == 0:
     print("-1")
