@@ -25,7 +25,7 @@ for i in range(r):
 frame = Frame(r, c, str_list)
 
 if args.bfs:
-    bfs = bfs(frame, args.bfs)  # TODO: Switch for bfs2 (latin chrs) when ready
+    bfs = bfs(frame, list(args.bfs))  # TODO: Switch for bfs2 (latin chrs) when ready
     print(len(bfs) - 1, '\n', bfs)
 
 if args.dfs:
