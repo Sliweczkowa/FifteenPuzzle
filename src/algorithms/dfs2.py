@@ -1,10 +1,16 @@
 from collections import deque
+from random import shuffle
 
 from src.frame import Frame
 
 
 def dfs(frame: Frame, order_of_moves):
     already_moved = set()
+
+    if order_of_moves[0] == 'R':
+        random_order = True
+    else:
+        random_order = False
 
     queue = deque([frame])
     while True:
@@ -13,6 +19,8 @@ def dfs(frame: Frame, order_of_moves):
         if current_frame.validate_win():
             return list(current_frame.moved)
 
+        if random_order:
+            shuffle(order_of_moves)
         for direction in reversed(order_of_moves):
             if direction not in moved_frames:
                 continue

@@ -1,7 +1,14 @@
+from random import shuffle
+
 from src.frame import Frame
 
 def idfs(frame: Frame, order_of_moves, depth, depth_limit):
     already_moved = set()
+
+    if order_of_moves[0] == 'R':
+        random_order = True
+    else:
+        random_order = False
 
     def _idfs(frame: Frame, order_of_moves, depth, depth_limit):
         if depth > depth_limit:
@@ -13,6 +20,8 @@ def idfs(frame: Frame, order_of_moves, depth, depth_limit):
         if frame.validate_win():
             return frame.moved
 
+        if random_order:
+            shuffle(order_of_moves)
         for direction in order_of_moves:
             if direction not in moved_frames:
                 continue
