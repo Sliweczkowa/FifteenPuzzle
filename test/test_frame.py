@@ -10,8 +10,8 @@ class TestFrame(unittest.TestCase):
         self.assertRaises(Exception, Frame, 4.15, 4, [])
         self.assertRaises(Exception, Frame, 4, 5.99, [])
         # Parameters row and column must be grater than 0
-        # self.assertRaises(Exception, Frame, 4, 0, [])  # TODO: frame.py
-        # self.assertRaises(Exception, Frame, 0, 4, [])  # TODO: frame.py
+        self.assertRaises(Exception, Frame, 4, 2, [])
+        self.assertRaises(Exception, Frame, 0, 4, [])
 
     def test_frame_values(self):
         # Parameter values' length must be the product of row and column
@@ -50,6 +50,72 @@ class TestFrame(unittest.TestCase):
         # Test legal moves for blank position (2, 2)
         frame.game_board = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         self.assertEqual(frame.get_legal_moves(2, 2), {(-1, 0), (0, -1)})
+
+    def test_get_moved_boards_middle(self):
+        self.frame = Frame(3, 3,
+                            [1, 2, 3,
+                                  4, 0, 5,
+                                  6, 7, 8])
+        moved_boards = self.frame.get_moved_boards()
+        expected_boards = [
+            [1, 0, 3,
+             4, 2, 5,
+             6, 7, 8],  # Move blank up
+
+            [1, 2, 3
+            , 0, 4, 5,
+             6, 7, 8],  # Move blank left
+
+
+            [1, 2, 3,
+             4, 5, 0,
+             6, 7, 8],  # Move blank right
+
+            [1, 2, 3,
+             4, 7, 5,
+             6, 0, 8]   # Move blank down
+        ]
+        self.assertEqual(moved_boards.values(), expected_boards)
+
+    def test_get_moved_boards_edge(self):
+        self.frame = Frame(3, 3,
+                            [1, 2, 3,
+                                  4, 5, 0,
+                                  6, 7, 8])
+        moved_boards = self.frame.get_moved_boards()
+        expected_boards = [
+            [1, 2, 3,
+             4, 0, 5,
+             6, 7, 8],  # Move blank left
+
+            [1, 2, 3,
+             4, 5, 8,
+             6, 7, 0],
+
+            [1, 2, 0,
+             4, 5, 3,
+             6, 7, 8],
+            # Move blank down
+        ]
+        self.assertEqual(set(tuple(i) for i in moved_boards.values()), set(tuple(i) for i in expected_boards))
+
+    def test_get_moved_boards_corner(self):
+        self.frame = Frame(3, 3,
+                           [1, 2, 3
+                                  , 4, 5, 6,
+                                  0, 7, 8])
+        moved_boards = self.frame.get_moved_boards()
+        expected_boards = [
+            [1, 2, 3
+            , 0, 5, 6,
+             4, 7, 8],  # Move blank up
+
+            [1, 2, 3,
+             4, 5, 6,
+             7, 0, 8]   # Move blank right
+        ]
+        self.assertEqual(set(tuple(i) for i in moved_boards.values()), set(tuple(i) for i in expected_boards))
+
 
 
 
