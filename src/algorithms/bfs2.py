@@ -7,6 +7,9 @@ def bfs2(frame: Frame, order_of_moves: list[chr]) -> list[chr]:
     already_moved = set()
     queue = deque([frame])
 
+    row_no = frame.row_count
+    column_no = frame.column_count
+
     while True:
         current_frame = queue.popleft()
         moved_frames = current_frame.get_moved_boards()
@@ -21,5 +24,5 @@ def bfs2(frame: Frame, order_of_moves: list[chr]) -> list[chr]:
             if tuple(new_frame) in already_moved:
                 continue
             additive = current_frame.moved + direction
-            queue.append(Frame(4, 4, new_frame, additive))
+            queue.append(Frame(r=row_no, c=column_no, vals=new_frame, moved=additive))
             already_moved.add(tuple(new_frame))
