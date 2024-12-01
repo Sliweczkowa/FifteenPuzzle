@@ -2,7 +2,7 @@ import argparse
 
 from src.algorithms.a_star import a_star
 from src.algorithms.bfs import bfs
-from src.frame import Frame
+from src.frame import Frame, save_boards_to_file
 
 parser = argparse.ArgumentParser(conflict_handler='resolve')
 
@@ -24,10 +24,11 @@ for i in range(r):
     str_list += [int(x) for x in input().split(' ')]
 # Frame creation
 frame = Frame(r, c, str_list)
+result = []
 
 if args.bfs:
-    bfs = bfs(frame, list(args.bfs))  # TODO: Switch for bfs2 (latin chrs) when ready
-    print(len(bfs) - 1, '\n', bfs)
+    result = bfs(frame, list(args.bfs))  # TODO: Switch for bfs2 (latin chrs) when ready
+    print(len(result) - 1, '\n', result)
 
 if args.dfs:
     # TODO: Implement depth-first search
@@ -38,17 +39,17 @@ if args.idfs:
     print("Info: iterative deepening DFS not implemented yet")
 
 if args.bf:
-    bf = a_star(frame, int(args.bf), 1)  # Only heuristic part of a*
-    print(len(bf), '\n', bf)
+    result = a_star(frame, int(args.bf), 1)  # Only heuristic part of a*
+    print(len(result), '\n', result)
 
 if args.astar:
-    astar = a_star(frame, int(args.astar), 0.5)
-    print(len(astar), '\n', astar)
+    result = a_star(frame, int(args.astar), 0.5)
+    print(len(result), '\n', result)
 
 if args.sma:
     # TODO: Implement SMA* strategy
     print("Info: SMA* strategy not implemented yet")
 
 if args.save:
-    # TODO: Implement output saving
-    print("Info: saving not implemented yet")
+    if result != -1 and result != []:
+        save_boards_to_file(frame, result, args.save)
