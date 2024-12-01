@@ -30,27 +30,27 @@ result = []
 
 if args.bfs:
     result = bfs2(frame, list(args.bfs))
-    print(len(result), '\n', result)
 
 if args.dfs:
     result = dfs(frame, list(args.dfs))
-    print(len(result), '\n', result)
 
 if args.idfs:
     result = idfs(frame, list(args.idfs), 0, 1)
-    print(len(result), '\n', result)
 
 if args.bf:
     result = a_star(frame, int(args.bf), 1)  # Only heuristic part of a*
-    print(len(result), '\n', result)
 
 if args.astar:
     result = a_star(frame, int(args.astar), 0.5)
-    print(len(result), '\n', result)
 
 if args.sma:
     # TODO: Implement SMA* strategy
     print("Info: SMA* strategy not implemented yet")
+
+if len(result) == 0:
+    print("-1")
+else:
+    print(len(result), '\n' + result)
 
 if args.save:
     if result != -1 and result != []:
