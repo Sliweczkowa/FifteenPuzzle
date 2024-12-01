@@ -1,5 +1,6 @@
 import argparse
 
+from src.algorithms.a_star import a_star
 from src.algorithms.bfs import bfs
 from src.frame import Frame
 
@@ -8,9 +9,9 @@ parser = argparse.ArgumentParser(conflict_handler='resolve')
 parser.add_argument("-b", "--bfs", help="breadth-first search", type=str, metavar="order")
 parser.add_argument("-d", "--dfs", help="depth-first search", type=str, metavar="order")
 parser.add_argument("-i", "--idfs", help="iterative deepening DFS", type=str, metavar="order")
-parser.add_argument("-h", "--bf", help="best-first strategy", type=int, metavar="id_of_heuristic")
-parser.add_argument("-a", "--astar", help="A* strategy", type=int, metavar="id_of_heuristic")
-parser.add_argument("-s", "--sma", help="SMA* strategy", type=int, metavar="id_of_heuristic")
+parser.add_argument("-h", "--bf", help="best-first strategy", type=str, metavar="id_of_heuristic")
+parser.add_argument("-a", "--astar", help="A* strategy", type=str, metavar="id_of_heuristic")
+parser.add_argument("-s", "--sma", help="SMA* strategy", type=str, metavar="id_of_heuristic")
 parser.add_argument("-f", "--save", help="save output to text file", type=str, metavar="filename")
 
 args = parser.parse_args()
@@ -37,12 +38,12 @@ if args.idfs:
     print("Info: iterative deepening DFS not implemented yet")
 
 if args.bf:
-    # TODO: Implement best-first strategy
-    print("Info: best-first strategy not implemented yet")
+    bf = a_star(frame, int(args.bf), 1)  # Only heuristic part of a*
+    print(len(bf), '\n', bf)
 
 if args.astar:
-    # TODO: Implement A* strategy
-    print("Info: A* strategy not implemented yet")
+    astar = a_star(frame, int(args.astar), 0.5)
+    print(len(astar), '\n', astar)
 
 if args.sma:
     # TODO: Implement SMA* strategy
